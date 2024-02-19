@@ -1,30 +1,31 @@
 import react from "react";
+import {useEffect,useState} from "react"
 
-function index (){
+function Index (){
 
-  function mostrarDatos(){
+  const [datos,setDatos] = useState();
+  
     
-    async function MostrarTareas(event){  //uso async y await para el get
-      event.preventDefault()
-      const res =  await fetch("/datos1") //para el get necesito otra direccion de api diferente
-      const data = await res.json()
-      document.getElementById("tarjeta").innerHTML = ""
-      for(let i=0;i<data.length;i++){
-        const texto = document.createElement("texto")
-        const descripcion = document.createElement("descripcion")
-        texto.innerHTML = `titulo: ${data[i].title}`
-        descripcion.innerHTML = ` descripcion: ${data[i].description} <br>`//muestra el dato y hace un salto de linea
-        document.getElementById("tarjeta").appendChild(texto)
-        document.getElementById("tarjeta").appendChild(descripcion)
-      }
-    }
+  useEffect(() => {
+    // Fetch data from the backend
+    fetch('http://localhost:4000/datos')
+      .then((response) => response.json())
+      .then((data) => {
+        setDatos(data);
+      });
+  }, []);
+
+  console.log(datos)
     
-  }
 
   return(
     
+    <div id="tarjeta" >
+      {/* {datos} */}
+    </div>
+  
    
   )
 }
 
-export default index;
+export default Index;
